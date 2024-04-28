@@ -1,0 +1,42 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import ipywidgets as widgets
+from IPython.display import display, clear_output
+# Wczytanie danych z pliku CSV
+data = pd.read_csv('base.csv')
+
+
+# Zdefiniowanie kolumn i utworzenie DataFrame
+columns = ['paper name', 'price', 'date sec', 'page url id', 'pagealias']
+df = pd.DataFrame(data, columns=columns)
+
+# Konwersja 'date sec' na format daty
+df['date sec'] = pd.to_datetime(df['date sec'], unit='s')
+#print(df['date sec'].dtype)
+
+# Wyświetlenie kilku wierszy DataFrame, aby sprawdzić zawartość
+#for paper_name, group_df in df.groupby('paper name'):
+    #print(group_df)
+
+# Grupowanie DataFrame po nazwie papieru i rysowanie oddzielnych wykresów dla każdej grupy
+for paper_name, group_df in df.groupby('paper name'):
+    plt.figure(figsize=(10, 6))
+    plt.plot(group_df['date sec'], group_df['price'], marker='o', linestyle='-', label='Price')
+    plt.title(f'Price for {paper_name}')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.xticks(rotation=45)
+    plt.legend()
+
+    # Dodanie linii trendu do każdego wykresu
+    z = np.polyfit(range(len(group_df['date sec'])), group_df['price'], 1)
+    p = np.poly1d(z)
+    plt.plot(group_df['date sec'], p(range(len(group_df['date sec']))), "r--")
+
+
+
+plt.tight_layout()
+
+plt.show()
+
