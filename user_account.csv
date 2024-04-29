@@ -1,4 +1,5 @@
-paper name,price,amount,date sec,page url id,page alias
+paper name,price,amount,date sec,page id,page alias
 Tesla,168.2900,3,1630796901,1,TSLA.US
 NVIDIA Corp,877.3500,5,1630796901,1,nvda.us
 S&P 500,5099.96,4,1630796950,1,^spx
+EURPLN,4.32800,1000,1630796950,1,eurpln&c=1d&t=l&a=lg&b=0
